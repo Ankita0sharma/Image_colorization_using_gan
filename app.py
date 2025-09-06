@@ -27,7 +27,6 @@ def postprocess_image(prediction):
     return encoded_img
 
 @app.route("/", methods=["GET", "POST"])
-@app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
         file = request.files["file"]
@@ -55,4 +54,5 @@ def index():
     return render_template("index.html")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # Needed only for local debugging
+    app.run(host="0.0.0.0", port=5000, debug=True)
