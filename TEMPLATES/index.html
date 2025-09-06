@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GAN Colorization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url("/static/img1.jpeg") no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: url("/static/IMG2.jpg") no-repeat center center;
+            background-size: cover;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            width: 550px;
+            font-size: 18px; /* Increased text size */
+        }
+        h1 {
+            color: black;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input[type="file"] {
+            display: block;
+            margin: 20px auto;
+            padding: 14px;
+            font-size: 18px;
+            font-family: "Verdana", sans-serif;
+            border: 2px dashed #ff66b2;
+            border-radius: 10px;
+            background: #fff0f5;
+            cursor: pointer;
+            width: 85%;
+            text-align: center;
+        }
+        input[type="file"]::file-selector-button {
+            background: #ff66b2; /* pink button */
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        input[type="file"]::file-selector-button:hover {
+            background: #ff3385;
+        }
+        button {
+            background: #66a6ff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #0e2d5fff;
+        }
+        h3 {
+            margin-top: 25px;
+            color: #444;
+            font-size: 20px;
+        }
+        .result-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            margin-top: 20px;
+        }
+        .result-box {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            width: 350px;   /* bigger container */
+            height: auto;
+        }
+        .result-box img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+        }
+
+        .result-box p {
+            font-size: 22px;  /* larger text */
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #000; /* keep text dark for readability */
+        }
+
+        .result-container img {
+            border-radius: 12px;
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.25);
+            width: 400px; /* bigger images */
+            height: auto;
+        }
+        .download-btn {
+            display: inline-block;
+            margin-top: 20px;
+            background: #28a745;
+            color: white;
+            padding: 12px 22px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .download-btn:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Image Colorization</h1>
+        <h2>Upload Grayscale Image</h2>
+        <form method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" accept="image/*" required>
+            <br>
+            <button type="submit">Upload & Colorize</button>
+        </form>
+
+        {% if result_image %}
+        <div class="result-container">
+            <div class="result-box">
+                <p>Grayscale</p>
+                <img src="data:image/png;base64,{{ input_image }}" alt="Grayscale Image">
+            </div>
+            <div class="result-box">
+                <p>Colorized</p>
+                <img src="data:image/png;base64,{{ result_image }}" alt="Colorized Image">
+            </div>
+        </div>
+        
+        <a class="download-btn" href="data:image/png;base64,{{ result_image }}" download="colorized.png">
+            ⬇ Download Image
+        </a>
+        
+    {% endif %}
+
+    </div>
+</body>
+</html>
